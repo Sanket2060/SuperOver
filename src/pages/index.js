@@ -1,10 +1,10 @@
 import CountryCup from "./CountryCup";
-import Home from "./Home";
+import Login from "./Login";
 import Leaderboard from "./Leaderboard";
 import MyProfile from "./MyProfile";
 export {
     CountryCup,
-    Home,
+    Login,
     Leaderboard,
     MyProfile
 }

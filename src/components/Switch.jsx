@@ -3,7 +3,7 @@ import { useState } from 'react'
 function Switch() {
      const [soundOn,isSoundOn ] = useState(true)
   return (
-    <div className={`bg-[#94574a] w-14 h-7 ${soundOn?'bg-[#1e363f]':null} rounded-full hover:cursor-pointer`}  onClick={
+    <div className={`w-14 h-7 ${soundOn?'bg-[#1e363f]':'bg-[#94574a]'} rounded-full hover:cursor-pointer`}  onClick={
       ()=>{
         isSoundOn(!soundOn)}
 
