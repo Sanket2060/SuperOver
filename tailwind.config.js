@@ -5,6 +5,9 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],  theme: {
     extend: {
+      rotate: {
+        '360': '360deg',
+      },
       fontFamily:{
         Russo: ['"Russo One"']
       }
