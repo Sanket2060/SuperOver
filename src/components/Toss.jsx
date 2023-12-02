@@ -1,39 +1,48 @@
 import React, { useEffect, useState } from 'react'
 import IMAGES from './images/images'
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 function Toss() {
+    const history=useHistory();
     const [spinAnimation, setSpinAnimation] = useState(false);
     const [tossResult,setTossResult]=useState('');
     const [tossResultMessage,setTossResultMessage]=useState('');
-    const spin = (userValue) => {
-        console.log("userValue:",userValue);
+    const [tossDecision,setTossDecision]=useState('');
+    const [userValue,setUserValue]=useState('');
+    const spin =  () => {
         setSpinAnimation(true);
         if (Math.random()>0.5){
             setTossResult('heads');
         }
         else{
             setTossResult('tails');
-
         }
-        if (tossResult && tossResult==userValue){
-            setTossResultMessage('You won the toss')
-        }else{
-            setTossResultMessage('You lost the toss')
-
-        }
-
     }
     useEffect(()=>{
+        if (tossResult && tossResult==userValue){
+            setTossResultMessage('You won the toss')
+        }
+        if (tossResult && tossResult!=userValue){
+            setTossResultMessage('You lost the toss')
+        }
+    },[tossResult,userValue])       
+    
+    useEffect(()=>{
         console.log("tossResult:",tossResult);
+        console.log("userValue:",userValue);
     },[tossResult])
     return (
         <div className='tossbox w-full h-80 bg-white mb-8 font-Russo flex flex-col items-center'>
             <div className="choose">
 
                 <button className='mr-10' onClick={()=>{
-                    spin("heads")}}>Heads</button>
+                    spin();
+                    setUserValue('heads');
+                    }}>Heads</button>
                 <button onClick={()=>{
-                    spin("tails")}}>Tails</button>
+                    spin()
+                    setUserValue('tails'); 
+                }    
+                    }>Tails</button>
             </div>
             {
              (tossResult=='heads')?
@@ -50,12 +59,12 @@ function Toss() {
             {
                 (tossResultMessage=='You won the toss')?
                     <div className="choose flex ">
-                <button className='mr-9'>Bat</button>
-                <button>Ball</button>
+                <button className='mr-9' onClick={()=>setTossDecision('Bat')}>Bat</button>
+                <button onClick={()=>setTossDecision('Bat')}>Ball</button>
                 </div>
-                :''
+                :<div>Opponent decided to {Math.random()>0.5?'bat':'ball'} first</div>
             }
-            <Link to='/game'><div className='text-black'>Continue</div></Link>
+        <div className='text-black' onClick={()=>{history.push('/game', { tossDecision})}}>Continue</div>
             
         </div>
     )
