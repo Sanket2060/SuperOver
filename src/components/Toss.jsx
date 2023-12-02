@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import IMAGES from './images/images'
 import { Link } from 'react-router-dom';
-import {Game} from '../pages/index'
 function Toss() {
     const [spinAnimation, setSpinAnimation] = useState(false);
     const [tossResult,setTossResult]=useState('');
@@ -56,7 +55,7 @@ function Toss() {
                 </div>
                 :''
             }
-            <Link to={<Game/>}>Continue</Link>
+            <Link to='/game'><div className='text-black'>Continue</div></Link>
             
         </div>
     )

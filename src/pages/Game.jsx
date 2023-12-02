@@ -7,7 +7,6 @@ function Game() {
   const [score,setScore]=useState([0,0]);
   const [ballsLeft,setBallsLeft]=useState(18);
   const [target,setTarget]=useState(undefined);
-  const [tossTime,setTossTime]=useState(false)
   const startGame=()=>{
     isStart(false);
     toss();
@@ -28,7 +27,6 @@ function Game() {
   return (
     <>
     {
-      tossTime?
       <div className="scorecard w-full h-80 bg-[#1e363f] mb-10 rounded-xl flex flex-col items-center ">
        {start?<div className="commentary font-Russo text-white my-3">
           Commentary:It's OUT
@@ -58,7 +56,7 @@ function Game() {
           </div>
         </div>
       </div>
-      :<Toss/>}
+      }
       <ScoreShortcut />
     </>
   )

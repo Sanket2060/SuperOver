@@ -16,7 +16,7 @@ function Home() {
              <hr  className='w-14'/>
            </div>
            <div className="playbuttons flex justify-between w-44">
-            <Link to='/game'><Button text="Random" imgComponent={<GiCardRandom />}  /></Link>
+            <Link to='/toss'><Button text="Random" imgComponent={<GiCardRandom />}  /></Link>
            <Button text="Friend" imgComponent={<FaUserFriends/>}/>
             </div>
 

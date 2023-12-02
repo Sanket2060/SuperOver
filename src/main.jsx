@@ -6,18 +6,21 @@ import { Route, createBrowserRouter, createRoutesFromElements,RouterProvider } f
 import Login from './pages/Login.jsx'
 import Home from './pages/Home.jsx'
 import Game from './pages/Game.jsx'
+import Toss from './components/Toss.jsx'
 
 const router=createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<App/>} >
     <Route path='' element={<Login/>}/>
     <Route path='home' element={<Home/>}/>
     <Route path='game' element={<Game/>}/>
+    <Route path='toss' element={<Toss/>}/>
   </Route>
   
 ))
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={router} >
+    </RouterProvider>
   </React.StrictMode>,
 )
