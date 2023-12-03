@@ -1,17 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Runs from '../components/Runs'
 import ScoreShortcut from '../components/ScoreShortcut'
-import { useNavigate, useParams } from 'react-router-dom';
-import Button from '../components/Button';
+import { useParams } from 'react-router-dom';
 function Game() {
   const userScreenRef = useRef();
-  const navigate=useNavigate();
   const compScreenRef = useRef();
   const params = useParams();
   const [score, setScore] = useState(0);
   const [wickets, setWickets] = useState(0);
   const [target, setTarget] = useState(undefined);
-  const [firstInningsScores, setFirstInningsScores] = useState([]);
+  const [secondInningsScores, setSecondInningsScores] = useState([]);
   const [commentary, setCommentary] = useState('Good to see everyone for this match here');
   const [ballsCount, setBallsCount] = useState(0);
   const startGame = () => {
@@ -20,19 +18,21 @@ function Game() {
 
   useEffect(() => {
     console.log(params);
-    setFirstInningsScores(simulateFirstInnings(params.tossResult));
+    setSecondInningsScores(simulateSecondInnings(params.current=='bat'?'bowling':'batting',parseInt(params.target)));
   }, [])
   useEffect(() => {
     console.log('ballsCount:', ballsCount);
-    console.log(firstInningsScores);
+    console.log(secondInningsScores);
     console.log("wickets", wickets);
     console.log("score", score);
     console.log("Target", target);
-  }, [firstInningsScores, wickets, score, target, ballsCount])
+  }, [secondInningsScores
+    , wickets, score, target, ballsCount
+])
   useEffect(()=>{
     if (ballsCount == 6) {
-      console.log("scorebeforetarget", score);
-      setTarget(parseInt(score+1))  //target setting using useEffect hook
+    //   console.log("scorebeforetarget", score);
+    //   setTarget(parseInt(score+1))  //target setting using useEffect hook
     }
   },[score])
 
@@ -179,15 +179,6 @@ function Game() {
     return results;
   }
   
-  // // Example usage for bowling:
-  // const targetRuns = 25;
-  // const bowlingDefensiveValues = simulateSecondInnings('bowling', targetRuns);
-  // console.log('Bowling Defensive Values:', bowlingDefensiveValues);
-  
-  // // Example usage for batting:
-  // const targetToChase = 20;
-  // const battingScores = simulateSecondInnings('batting', targetToChase);
-  // console.log('Batting Scores:', battingScores);
   
 
   
@@ -232,9 +223,7 @@ function Game() {
               <Runs text="6" onClick={() => { updateScreen('6') }} />
 
             </div>
-         {target? <div className='text-center hover:cursor-pointer' onClick={()=>{
-            navigate(`/gamesecondinnings/${params.tossResult=='bat'?'ball':'bat'}/${target}`);
-          }}>Continue</div>:''}
+          <div className='text-center hover:cursor-pointer'>Continue</div>
 
           </div>
         </div>
