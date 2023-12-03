@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Button from '../components/button'
+import Button from '../components/Button'
 import { BiSolidCricketBall } from "react-icons/bi";
 function Login() {
   const [signUp,isSignUp]=useState(true);
