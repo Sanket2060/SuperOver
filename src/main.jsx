@@ -8,6 +8,7 @@ import Home from './pages/Home.jsx'
 import Game from './pages/Game.jsx'
 import Toss from './components/Toss.jsx'
 import GameSecondInnings from './pages/GameSecondInnings.jsx'
+import Results from './pages/Results.jsx'
 
 const router=createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<App/>} >
@@ -16,6 +17,8 @@ const router=createBrowserRouter(createRoutesFromElements(
     <Route path='toss' element={<Toss/>}/>
     <Route path='game/:tossResult' element={<Game/>}/>
     <Route path='gamesecondinnings/:current/:target' element={<GameSecondInnings/>}/>
+    <Route path='/results/:result' element={<Results/>}/>
+
 
   </Route>
   

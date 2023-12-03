@@ -233,7 +233,7 @@ function Game() {
 
             </div>
          {target? <div className='text-center hover:cursor-pointer' onClick={()=>{
-            navigate(`/gamesecondinnings/${params.tossResult=='bat'?'ball':'bat'}/${target}`);
+            navigate(`/gamesecondinnings/${params.tossResult=='batting'?'ball':'bat'}/${target}`);
           }}>Continue</div>:''}
 
           </div>

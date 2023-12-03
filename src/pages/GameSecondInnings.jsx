@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Runs from '../components/Runs'
 import ScoreShortcut from '../components/ScoreShortcut'
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 function Game() {
   const userScreenRef = useRef();
   const compScreenRef = useRef();
   const params = useParams();
+  const navigate=useNavigate();
   const [score, setScore] = useState(0);
   const [wickets, setWickets] = useState(0);
-  const [target, setTarget] = useState(undefined);
   const [secondInningsScores, setSecondInningsScores] = useState([]);
   const [commentary, setCommentary] = useState('Good to see everyone for this match here');
   const [ballsCount, setBallsCount] = useState(0);
@@ -25,27 +25,26 @@ function Game() {
     console.log(secondInningsScores);
     console.log("wickets", wickets);
     console.log("score", score);
-    console.log("Target", target);
   }, [secondInningsScores
-    , wickets, score, target, ballsCount
+    , wickets, score, ballsCount
 ])
-  useEffect(()=>{
-    if (ballsCount == 6) {
-    //   console.log("scorebeforetarget", score);
-    //   setTarget(parseInt(score+1))  //target setting using useEffect hook
-    }
-  },[score])
+//   useEffect(()=>{
+//     if (ballsCount == 6) {
+//     //   console.log("scorebeforetarget", score);
+//     //   setTarget(parseInt(score+1))  //target setting using useEffect hook
+//     }
+//   },[score])
 
 
   const Ball = (runs, tossResult) => {
-    if (tossResult == 'batting') {  //batting first
+    if (params.current == 'bat') {  //batting at second innings
 
       if (ballsCount <= 5) {
 
-        if (firstInningsScores[ballsCount] == runs) {
+        if (secondInningsScores[ballsCount] == runs) {
           setWickets((wickets + 1))
           setCommentary("That's excellent bowling and a wicket");
-        } else if (firstInningsScores[ballsCount] != runs) {
+        } else if (secondInningsScores[ballsCount] != runs) {
           setScore((score + parseInt(runs)));                       //score being updated asynchronously
           if (runs == 1) {
             setCommentary("That's a good yorker and just a single");
@@ -67,30 +66,27 @@ function Game() {
       } else {
         setCommentary('End of the innings and we resume after this break');
       }
-    }else {   //bowling first innings
+    }else {   //bowling second innings
       if (ballsCount <= 5) {
 
-        if (firstInningsScores[ballsCount] == runs) {
+        if (secondInningsScores[ballsCount] == runs) {
           setWickets((wickets + 1))
           setCommentary("That's excellent bowling and a wicket");
-        } else if (firstInningsScores[ballsCount] != runs) {
-          setScore((score + parseInt(firstInningsScores[ballsCount])));
-          if (firstInningsScores[ballsCount] == 1) {
+        } else if (secondInningsScores[ballsCount] != runs) {
+          setScore((score + parseInt(secondInningsScores[ballsCount])));
+          if (secondInningsScores[ballsCount] == 1) {
             setCommentary("That's a good yorker and just a single");
           }
-          else if (firstInningsScores[ballsCount] == 2 || firstInningsScores[ballsCount] == 3) {
-            setCommentary(`Great running  and it's ${firstInningsScores[ballsCount]} more runs`);
+          else if (secondInningsScores[ballsCount] == 2 || secondInningsScores[ballsCount] == 3) {
+            setCommentary(`Great running  and it's ${secondInningsScores[ballsCount]} more runs`);
           }
           else {
-            setCommentary("Batsmen lofts the shot and it's " + firstInningsScores[ballsCount]);
+            setCommentary("Batsmen lofts the shot and it's " + secondInningsScores[ballsCount]);
           }
         }
 
 
-        if (ballsCount == 5) {
-          console.log("scorebeforetarget", score);
-          setTarget(parseInt(score))  //taking old scores
-        }
+       
         setBallsCount(ballsCount + 1);
       } else {
         setCommentary('End of the innings and we resume after this break');
@@ -101,68 +97,57 @@ function Game() {
   }
 
 
+
   const updateScreen = (runs) => {
     userScreenRef.current.innerHTML = runs;
-    compScreenRef.current.innerHTML =firstInningsScores[ballsCount]?firstInningsScores[ballsCount]:firstInningsScores[ballsCount-1];
+    compScreenRef.current.innerHTML =secondInningsScores[ballsCount]?secondInningsScores[ballsCount]:secondInningsScores[ballsCount-1];
     Ball(runs, params.tossResult);
   }
+ useEffect(()=>{
+ if ((score>=params.target || ballsCount==6) && (params.current=='bat') ){  //user batting ->won
+    setTimeout(()=>{
+        navigate('/results/won');
+    },5000)
+ }else if ((score<=params.target && ballsCount==6) && (params.current=='bat'))  //user batting->lost
+ {
+    setTimeout(()=>{
+        navigate('/results/lost');
+    },5000)
 
-  function simulateFirstInnings(role) {
-    const results = [];
-    let remainingRuns = 22;
+ }
+ else if ((score<=params.target && ballsCount==6) && (params.current=='ball')){  //user bowling->won
+    setTimeout(()=>{
+        navigate('/results/won');
+    },5000)
+    
+ }
+ else if ((score>=params.target && ballsCount==6) && (params.current=='ball')){
+    setTimeout(()=>{
+        navigate('/results/lost');
+    },5000)
 
-    for (let i = 0; i < 6; i++) {
-      let currentBallScore;
-
-      if (role === 'bowling') {
-        // Bowling priorities: Save 4's and 6's, then 3's, and lastly, save small runs
-        if (remainingRuns >= 4 && Math.random() < 0.6) {
-          currentBallScore = 4;
-        } else if (remainingRuns >= 6 && Math.random() < 0.4) {
-          currentBallScore = 6;
-        } else if (remainingRuns >= 3 && Math.random() < 0.7) {
-          currentBallScore = 3;
-        } else {
-          // Save small runs with decreasing priority, excluding 0
-          const smallRuns = [1, 2];
-          currentBallScore = smallRuns[Math.floor(Math.random() * smallRuns.length)];
-        }
-      } else if (role === 'batting') {
-        // Batting priorities: Aim for around 22 runs, with different combinations
-        const possibleScores = [1, 2, 3, 4, 6];
-        currentBallScore = possibleScores[Math.floor(Math.random() * possibleScores.length)];
-
-        // Ensure not to overshoot the target
-        if (remainingRuns - currentBallScore < 0) {
-          currentBallScore = remainingRuns;
-        }
-      }
-
-      // Update the remaining runs and push the current ball score to the results array
-      remainingRuns -= currentBallScore;
-      results.push(currentBallScore);
-    }
-
-    return results;
-  }
-
+ }
+ },[score,ballsCount])
+  
   
 
   function simulateSecondInnings(role, target) {
     const results = [];
   
-    if (role === 'bowling') {
-      // Bowling: Generate an array of defensive values to defend the target
-      let remaining = target;
-      for (let i = 0; i < 6; i++) {
-        const defensiveValue = [6, 4, 3, 2, 1][Math.floor(Math.random() * 5)];
-        results.push(defensiveValue);
-        remaining -= defensiveValue;
+    // if (role === 'bowling') {
+    //   // Bowling: Generate an array of defensive values to defend the target
+    //   let remaining = target;
+    //   for (let i = 0; i < 6; i++) {
+    //     const defensiveValue = [6, 4, 3, 2, 1][Math.floor(Math.random() * 5)];
+    //     results.push(defensiveValue);
+    //     remaining -= defensiveValue;
   
-        // Ensure the remaining runs are non-negative
-        remaining = Math.max(0, remaining);
-      }
-    } else if (role === 'batting') {
+    //     // Ensure the remaining runs are non-negative
+    //     remaining = Math.max(0, remaining);
+    //   }
+    // } 
+    // else
+     if (role === 'batting' || role==='bowling') {
       // Batting: Generate an array of how you can reach the target runs
       let remaining = target;
       for (let i = 0; i < 6; i++) {
@@ -179,18 +164,8 @@ function Game() {
     return results;
   }
   
-  
 
-  
-
-  const updateScoreCard = () => {
-
-
-  }
-
-
-
-  return (
+return (
     <>
       {
         <div className="scorecard w-full h-[340px] bg-[#1e363f] mb-10 rounded-xl flex flex-col items-center ">
@@ -223,12 +198,12 @@ function Game() {
               <Runs text="6" onClick={() => { updateScreen('6') }} />
 
             </div>
-          <div className='text-center hover:cursor-pointer'>Continue</div>
+          {/* <div className='text-center hover:cursor-pointer'>Continue</div> */}
 
           </div>
         </div>
       }
-      <ScoreShortcut ballsCount={ballsCount} score={score} target={target} wickets={wickets} />
+      <ScoreShortcut ballsCount={ballsCount} score={score} target={params.target} wickets={wickets} />
     </>
   )
 
