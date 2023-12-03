@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import IMAGES from './images/images'
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function Toss() {
-    const history=useHistory();
+    const navigate=useNavigate();
     const [spinAnimation, setSpinAnimation] = useState(false);
     const [tossResult,setTossResult]=useState('');
     const [tossResultMessage,setTossResultMessage]=useState('');
     const [tossDecision,setTossDecision]=useState('');
     const [userValue,setUserValue]=useState('');
+    const [computerTossDecision,setComputerTossDecision]=useState('');
     const spin =  () => {
         setSpinAnimation(true);
         if (Math.random()>0.5){
             setTossResult('heads');
+            setComputerTossDecision('batting');
         }
         else{
             setTossResult('tails');
+            setComputerTossDecision('bowling');
+
         }
     }
     useEffect(()=>{
@@ -59,12 +63,12 @@ function Toss() {
             {
                 (tossResultMessage=='You won the toss')?
                     <div className="choose flex ">
-                <button className='mr-9' onClick={()=>setTossDecision('Bat')}>Bat</button>
-                <button onClick={()=>setTossDecision('Bat')}>Ball</button>
+                <button className='mr-9' onClick={()=>setTossDecision('batting')}>Bat</button>
+                <button onClick={()=>setTossDecision('bowling')}>Ball</button>
                 </div>
-                :<div>Opponent decided to {Math.random()>0.5?'bat':'ball'} first</div>
+                :<div>Opponent decided to {computerTossDecision} first</div>
             }
-        <div className='text-black' onClick={()=>{history.push('/game', { tossDecision})}}>Continue</div>
+        <div className='text-black hover:cursor-pointer' onClick={()=>{navigate(tossDecision?`/game/${tossDecision}`:computerTossDecision=='batting'?`/game/bowling`:'/game/batting')}}>Continue</div>
             
         </div>
     )
