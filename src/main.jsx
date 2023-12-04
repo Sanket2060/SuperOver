@@ -9,6 +9,8 @@ import Game from './pages/Game.jsx'
 import Toss from './components/Toss.jsx'
 import GameSecondInnings from './pages/GameSecondInnings.jsx'
 import Results from './pages/Results.jsx'
+import { Provider } from 'react-redux'
+import store from './App/store.js'
 
 const router=createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<App/>} >
@@ -26,7 +28,10 @@ const router=createBrowserRouter(createRoutesFromElements(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} >
-    </RouterProvider>
+    <Provider store={store}>
+
+    <RouterProvider router={router} />  
+    {/* //kei lai ni wrap garnu pardaina yo method ma */}
+    </Provider>
   </React.StrictMode>,
 )

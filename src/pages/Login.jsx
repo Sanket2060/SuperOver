@@ -4,28 +4,40 @@ import { BiSolidCricketBall } from "react-icons/bi";
 import { useForm } from "react-hook-form";
 import auth from '../Appwrite/auth';
 import { useNavigate } from 'react-router-dom';
+import { useSelector,useDispatch } from 'react-redux'; 
+import { login } from '../features/userDetailsSlice';   //useSelector,useDispatch ko lagi k k import garnu parxa??
+// import { store } from '../App/store';
 function Login() {
   const navigate=useNavigate();
   const {register,handleSubmit}=useForm();
   const [signUp,isSignUp]=useState(true);
+  const dispatch=useDispatch();
+  const [error,setError]=useState('');
 
-
-
-  const authenticate=async ({email,password})=>{
+  const authenticate=async ({username,email,password})=>{
     console.log(email,password);
-    if (signUp){
-      const response=await auth.signUp(email, password);    
-      if (response){
-       console.log("response:",response);
-       navigate('/home');
+    try {
+        if (signUp){
+        const response=await auth.signUp(email, password);    
+        if (response){
+          console.log("response:",response);
+          dispatch(login({...response,username}));
+          navigate('/home');
+         }
+        }
+       else {
+         const response=await auth.login(email, password);    
+         if (response){
+          console.log("response:",response);
+          dispatch(login(response,username));
+          navigate('/home');
+         }
+         }       
+      } catch (error) {
+        console.log("Error",error.message);
+        setError(error.message);
       }
-    } else {
-      const response=await auth.login(email, password);    
-      if (response){
-       console.log("response:",response);
-       navigate('/home');
-      }
-    }
+     
     
   }
   return (
@@ -39,7 +51,7 @@ function Login() {
           required:true,
           validate:{
             matchPattern:(value)=>
-            /^[a-zA-Z0-9]{1,8}$/.test(value) || "Username should be shorter",            
+            /^[a-zA-Z0-9]{1,8}$/.test(value) || setError("Username should be shorter")           
           }
           })}/>:''}
           <input type="text" placeholder='email' className='text-lg placeholder:font-Russo focus:outline-none mb-4 p-2' {...register('email',{required:true,})} />
@@ -48,7 +60,7 @@ function Login() {
           {/* Avatar:<input type="file" name="" id="" className='mb-8' /> */}
           <Button text="Submit" type="submit" /> 
           <br />
-           <BiSolidCricketBall className='w-14 h-14 mt-5 animate-spin '/>
+         {error?<div>{error}</div>  :<BiSolidCricketBall className='w-14 h-14 mt-5 animate-spin '/>}
            </form>
   
        
@@ -56,5 +68,6 @@ function Login() {
         </div>
   )
 }
+          
 
 export default Login

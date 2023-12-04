@@ -64,7 +64,9 @@ function Toss() {
                 (tossResultMessage=='You won the toss')?
                     <div className="choose flex ">
                 <button className='mr-9' onClick={()=>setTossDecision('batting')}>Bat</button>
-                <button onClick={()=>setTossDecision('bowling')}>Ball</button>
+                <button onClick={()=>
+                    setTossDecision('bowling')  }
+                >Ball</button>
                 </div>
                 :<div>Opponent decided to {computerTossDecision} first</div>
             }

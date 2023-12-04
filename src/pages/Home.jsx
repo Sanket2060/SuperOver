@@ -7,7 +7,17 @@ import { CgProfile } from "react-icons/cg";
 import { TfiCup } from "react-icons/tfi";
 import { Link } from 'react-router-dom';  
 import { CiLogout } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch} from 'react-redux';
+import { logout as slicelogout } from '../features/userDetailsSlice';
 function Home() {
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
+  const logout=()=>{
+  dispatch(slicelogout()) ; 
+  navigate('/');
+
+  }
   return (
     <>
           <div className="play flex my-6">
@@ -29,7 +39,7 @@ function Home() {
            <Button text="Leaderboard" imgComponent={<GiPodiumWinner/>} />
            <Button text="My Profile" imgComponent={<CgProfile />}/>
            <Button text="Country Cup" imgComponent={<TfiCup />}/>
-           <Button text="LogOut" imgComponent={<CiLogout />}/>
+           <Button text="LogOut" imgComponent={<CiLogout />} onClick={logout}/>
 
             </div>
 
