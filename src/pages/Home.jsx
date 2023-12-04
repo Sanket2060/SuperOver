@@ -6,7 +6,7 @@ import { GiPodiumWinner } from "react-icons/gi";
 import { CgProfile } from "react-icons/cg";
 import { TfiCup } from "react-icons/tfi";
 import { Link } from 'react-router-dom';  
-import Game from './Game';
+import { CiLogout } from "react-icons/ci";
 function Home() {
   return (
     <>
@@ -25,10 +25,11 @@ function Home() {
              <p>Check</p>
              <hr  className='w-14'/>
            </div> 
-            <div className="playbuttons flex justify-around w-72">
+            <div className="playbuttons flex justify-around w-full ">
            <Button text="Leaderboard" imgComponent={<GiPodiumWinner/>} />
            <Button text="My Profile" imgComponent={<CgProfile />}/>
            <Button text="Country Cup" imgComponent={<TfiCup />}/>
+           <Button text="LogOut" imgComponent={<CiLogout />}/>
 
             </div>
 
