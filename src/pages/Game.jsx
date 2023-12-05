@@ -87,10 +87,10 @@ function Game() {
         }
 
 
-        if (ballsCount == 5) {
-          console.log("scorebeforetarget", score);
-          setTarget(parseInt(score))  //taking old scores
-        }
+        // if (ballsCount == 5) {
+        //   console.log("scorebeforetarget", score);
+        //   setTarget(parseInt(score))  //taking old scores
+        // }
         setBallsCount(ballsCount + 1);
       } else {
         setCommentary('End of the innings and we resume after this break');

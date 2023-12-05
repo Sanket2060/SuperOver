@@ -105,29 +105,32 @@ function Game() {
   }
  useEffect(()=>{
  if ((score>=params.target || ballsCount==6) && (params.current=='bat') ){  //user batting ->won
-    setTimeout(()=>{
+    // setTimeout(()=>{
         navigate('/results/won');
-    },5000)
+    // },5000)
  }else if ((score<=params.target && ballsCount==6) && (params.current=='bat'))  //user batting->lost
  {
-    setTimeout(()=>{
+    // setTimeout(()=>{
         navigate('/results/lost');
-    },5000)
+    // },5000)
 
  }
  else if ((score<=params.target && ballsCount==6) && (params.current=='ball')){  //user bowling->won
-    setTimeout(()=>{
+    // setTimeout(()=>{
         navigate('/results/won');
-    },5000)
+    // },5000)
     
  }
- else if ((score>=params.target && ballsCount==6) && (params.current=='ball')){
-    setTimeout(()=>{
+ else if ((score>=params.target) && (params.current=='ball')){  //user bowling->lost
+    // setTimeout(()=>{
         navigate('/results/lost');
-    },5000)
-
- }
- },[score,ballsCount])
+    // },5000)}
+//  }else if ((score>=params.target && ballsCount==6) && (params.current=='bat')){
+//   setTimeout(()=>{
+//     navigate('/results/lost');  //computer won at
+// },5000)   
+//  }
+ }},[score,ballsCount])
   
   
 
