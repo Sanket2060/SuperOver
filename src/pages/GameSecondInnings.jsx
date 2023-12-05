@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Runs from '../components/Runs'
 import ScoreShortcut from '../components/ScoreShortcut'
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 function Game() {
   const userScreenRef = useRef();
   const compScreenRef = useRef();

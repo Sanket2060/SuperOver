@@ -2,8 +2,10 @@ import React, { useState, useRef, useEffect } from 'react'
 import Runs from '../components/Runs'
 import ScoreShortcut from '../components/ScoreShortcut'
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Button from '../components/Button';
 function Game() {
+  const username=useSelector((state)=>state.userDetails);
   const userScreenRef = useRef();
   const navigate=useNavigate();
   const compScreenRef = useRef();
@@ -14,6 +16,10 @@ function Game() {
   const [firstInningsScores, setFirstInningsScores] = useState([]);
   const [commentary, setCommentary] = useState('Good to see everyone for this match here');
   const [ballsCount, setBallsCount] = useState(0);
+   useEffect(() => {
+    console.log("username",username.userDetails);
+  }, [username]);
+  
   const startGame = () => {
     isStart(true);
   }
@@ -23,11 +29,11 @@ function Game() {
     setFirstInningsScores(simulateFirstInnings(params.tossResult));
   }, [])
   useEffect(() => {
-    console.log('ballsCount:', ballsCount);
-    console.log(firstInningsScores);
-    console.log("wickets", wickets);
-    console.log("score", score);
-    console.log("Target", target);
+    // console.log('ballsCount:', ballsCount);
+    // console.log(firstInningsScores);
+    // console.log("wickets", wickets);
+    // console.log("score", score);
+    // console.log("Target", target);
   }, [firstInningsScores, wickets, score, target, ballsCount])
   useEffect(()=>{
     if (ballsCount == 6) {

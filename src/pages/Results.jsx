@@ -19,8 +19,8 @@ function Results() {
           </div>
       }
       <div className='buttons flex justify-evenly w-full'>
-        <Link to='/toss'><Button text="Re-Play" imgComponent={<MdOutlineReplay />} /></Link>
-        <Link to='/home'><Button text="Back" imgComponent={<IoArrowBackCircleSharp />} /></Link>
+        <Link to='/toss'><Button text="RePlay" imgComponent={<MdOutlineReplay size={25} />} /></Link>
+        <Link to='/home'><Button text="Back" imgComponent={<IoArrowBackCircleSharp size={25}/>} /></Link>
       </div>
     </>
   )

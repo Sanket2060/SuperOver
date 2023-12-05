@@ -26,8 +26,8 @@ function Home() {
              <hr  className='w-14'/>
            </div>
            <div className="playbuttons flex justify-between w-44">
-            <Link to='/toss'><Button text="Random" imgComponent={<GiCardRandom />}  /></Link>
-           <Button text="Friend" imgComponent={<FaUserFriends/>}/>
+            <Link to='/toss'><Button text="Random" imgComponent={<GiCardRandom size={30} />}  /></Link>
+           <Button text="Friend" imgComponent={<FaUserFriends size={30}/>}/>
             </div>
 
             <div className="check flex my-6">
@@ -36,10 +36,10 @@ function Home() {
              <hr  className='w-14'/>
            </div> 
             <div className="playbuttons flex justify-around w-full ">
-           <Link to='/leaderboard'><Button text="Leaderboard" imgComponent={<GiPodiumWinner/>} /></Link>
-           <Link to='/myprofile'><Button text="My Profile" imgComponent={<CgProfile />}/></Link>
-           <Button text="Country Cup" imgComponent={<TfiCup />}/>
-           <Button text="LogOut" imgComponent={<CiLogout />} onClick={logout}/>
+           <Link to='/leaderboard'><Button text="Leaderboard" imgComponent={<GiPodiumWinner size={30}/>} className='text-[12px]' /></Link>
+           <Link to='/myprofile'><Button text="Profile" imgComponent={<CgProfile size={30}/>} className='text-[12px]'/></Link>
+           <Button text="SuperCup" imgComponent={<TfiCup size={30}/>} className='text-[12px]'/>
+           <Button text="LogOut" imgComponent={<CiLogout size={30}/>} onClick={logout}/>
 
             </div>
 
