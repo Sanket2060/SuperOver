@@ -11,6 +11,8 @@ import GameSecondInnings from './pages/GameSecondInnings.jsx'
 import Results from './pages/Results.jsx'
 import { Provider } from 'react-redux'
 import store from './App/store.js'
+import Leaderboard from './pages/Leaderboard.jsx'
+import { MyProfile } from './pages/index.js'
 
 const router=createBrowserRouter(createRoutesFromElements(
   <Route path='/' element={<App/>} >
@@ -20,6 +22,10 @@ const router=createBrowserRouter(createRoutesFromElements(
     <Route path='game/:tossResult' element={<Game/>}/>
     <Route path='gamesecondinnings/:current/:target' element={<GameSecondInnings/>}/>
     <Route path='/results/:result' element={<Results/>}/>
+    <Route path='/leaderboard' element={<Leaderboard/>}/>
+    <Route path='/myprofile' element={<MyProfile/>}/>
+
+
 
 
   </Route>

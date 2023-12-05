@@ -36,8 +36,8 @@ function Home() {
              <hr  className='w-14'/>
            </div> 
             <div className="playbuttons flex justify-around w-full ">
-           <Button text="Leaderboard" imgComponent={<GiPodiumWinner/>} />
-           <Button text="My Profile" imgComponent={<CgProfile />}/>
+           <Link to='/leaderboard'><Button text="Leaderboard" imgComponent={<GiPodiumWinner/>} /></Link>
+           <Link to='/myprofile'><Button text="My Profile" imgComponent={<CgProfile />}/></Link>
            <Button text="Country Cup" imgComponent={<TfiCup />}/>
            <Button text="LogOut" imgComponent={<CiLogout />} onClick={logout}/>
 
