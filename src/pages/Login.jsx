@@ -21,7 +21,9 @@ function Login() {
         const response=await auth.signUp(email, password);    
         if (response){
           console.log("response:",response);
-          dispatch(login({...response,username}));
+          const userDetails=await auth.getUserDetailsDocument(email);
+          dispatch(login(userDetails));
+          auth.createDocument(email,username);
           navigate('/home');
          }
         }
@@ -29,8 +31,10 @@ function Login() {
          const response=await auth.login(email, password);    
          if (response){
           console.log("response:",response);
-          dispatch(login(response,username));
+          dispatch(login(response));
           navigate('/home');
+          const userDetails=await auth.getUserDetailsDocument(email);
+          console.log("userDetails",userDetails);
          }
          }       
       } catch (error) {
