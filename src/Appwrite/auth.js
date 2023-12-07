@@ -1,6 +1,7 @@
 import { Client, Databases, Account, ID,Query} from 'appwrite';
 import conf from '../conf/conf';
-
+import { useDispatch } from 'react-redux';
+import { login } from '../features/userDetailsSlice';
 class Auth {
   client = new Client();
   account = new Account(this.client);
@@ -42,7 +43,7 @@ class Auth {
       const response =await this.databases.createDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
-        ID.unique(),
+        username,
         { username,
           userEmail:email,
           image:null,
@@ -66,16 +67,31 @@ class Auth {
     try {
       const response =await this.databases.listDocuments(conf.appwriteDatabaseId,conf.appwriteCollectionId)
       console.log(response.documents);
-      return response;  
+      return response.documents;  
     } catch (error) {
       console.log("getUserDetailsDocument error:",error);
       throw error.message;
       
     }
+  }
 
+  updateDocument=async(username,totalPoints)=>{
+    try {
+      console.log("username at updataeDocument",username);
+    await  this.databases.updateDocument(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        username,{
+          totalPoints:totalPoints+5
 
-
-
+        }
+        );
+    
+    
+    } catch (error) {
+      console.log("Error at updateDocument:",error);
+      throw error
+    }
   }
 
   getUserDetailsDocument=async(userEmail)=>{

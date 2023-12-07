@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from 'react'
 import Runs from '../components/Runs'
 import ScoreShortcut from '../components/ScoreShortcut'
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 function Game() {
+  const username=useSelector((state)=>state.userDetails.userDetails.username);
   const userScreenRef = useRef();
   const compScreenRef = useRef();
   const params = useParams();
@@ -12,14 +14,12 @@ function Game() {
   const [secondInningsScores, setSecondInningsScores] = useState([]);
   const [commentary, setCommentary] = useState('Good to see everyone for this match here');
   const [ballsCount, setBallsCount] = useState(0);
-  const startGame = () => {
-    isStart(true);
-  }
+  
 
   useEffect(() => {
     console.log(params);
     setSecondInningsScores(simulateSecondInnings(params.current=='bat'?'bowling':'batting',parseInt(params.target)));
-  }, [])
+  }, []);
   useEffect(() => {
     console.log('ballsCount:', ballsCount);
     console.log(secondInningsScores);
@@ -28,6 +28,7 @@ function Game() {
   }, [secondInningsScores
     , wickets, score, ballsCount
 ])
+
 //   useEffect(()=>{
 //     if (ballsCount == 6) {
 //     //   console.log("scorebeforetarget", score);
@@ -171,7 +172,7 @@ function Game() {
 return (
     <>
       {
-        <div className="scorecard w-full h-[340px] bg-[#1e363f] mb-10 rounded-xl flex flex-col items-center ">
+        <div className="scorecard w-full h-[355px] bg-[#1e363f] mb-1 rounded-xl flex flex-col items-center ">
           {/* {start ? */}
            <div className="commentary font-Russo text-white my-3">
             {commentary}
@@ -181,7 +182,7 @@ return (
           <div className="scores bg-white w-80 h-40 rounded-2xl  my-3 font-Russo flex justify-between px-3">
             <div className="player1">
               <div className="score text-center text-9xl" ref={userScreenRef}>4</div>
-              <div className="playername text-lg">Sanket</div>
+              <div className="playername text-lg">{username}</div>
             </div>
             <div className="player2  ">
 

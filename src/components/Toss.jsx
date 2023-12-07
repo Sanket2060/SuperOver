@@ -70,7 +70,10 @@ function Toss() {
                 </div>
                 :(tossResultMessage==='You lost the toss')?<div>Opponent decided to {computerTossDecision} first</div>:''
             }
-        <div className='text-black hover:cursor-pointer' onClick={()=>{navigate(tossDecision?`/game/${tossDecision}`:computerTossDecision=='batting'?`/game/bowling`:'/game/batting')}}>Continue</div>
+        {
+            tossResult?
+        <div className='text-black hover:cursor-pointer' onClick={()=>{navigate(tossDecision?`/game/${tossDecision}`:computerTossDecision=='batting'?`/game/bowling`:'/game/batting')}}>Continue</div>:null
+        }
             
         </div>
     )

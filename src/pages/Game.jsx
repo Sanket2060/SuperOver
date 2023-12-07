@@ -3,9 +3,8 @@ import Runs from '../components/Runs'
 import ScoreShortcut from '../components/ScoreShortcut'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Button from '../components/Button';
 function Game() {
-  const username=useSelector((state)=>state.userDetails);
+  const username=useSelector((state)=>state.userDetails.userDetails.username);
   const userScreenRef = useRef();
   const navigate=useNavigate();
   const compScreenRef = useRef();
@@ -17,7 +16,7 @@ function Game() {
   const [commentary, setCommentary] = useState('Good to see everyone for this match here');
   const [ballsCount, setBallsCount] = useState(0);
    useEffect(() => {
-    console.log("username",username.userDetails);
+    console.log("username",username);
   }, [username]);
   
   const startGame = () => {
@@ -185,30 +184,18 @@ function Game() {
     return results;
   }
   
-  // // Example usage for bowling:
-  // const targetRuns = 25;
-  // const bowlingDefensiveValues = simulateSecondInnings('bowling', targetRuns);
-  // console.log('Bowling Defensive Values:', bowlingDefensiveValues);
-  
-  // // Example usage for batting:
-  // const targetToChase = 20;
-  // const battingScores = simulateSecondInnings('batting', targetToChase);
-  // console.log('Batting Scores:', battingScores);
   
 
   
 
-  const updateScoreCard = () => {
-
-
-  }
+  
 
 
 
   return (
     <>
       {
-        <div className="scorecard w-full h-[340px] bg-[#1e363f] mb-10 rounded-xl flex flex-col items-center ">
+        <div className="scorecard w-full h-[355px] bg-[#1e363f] mb-1 rounded-xl flex flex-col items-center ">
           {/* {start ? */}
            <div className="commentary font-Russo text-white my-3">
             {commentary}
@@ -218,7 +205,7 @@ function Game() {
           <div className="scores bg-white w-80 h-40 rounded-2xl  my-3 font-Russo flex justify-between px-3">
             <div className="player1">
               <div className="score text-center text-9xl" ref={userScreenRef}>4</div>
-              <div className="playername text-lg">Sanket</div>
+              <div className="playername text-lg">{username}</div>
             </div>
             <div className="player2  ">
 

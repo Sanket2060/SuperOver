@@ -1,7 +1,9 @@
 // Profile.js
 
 import React from 'react';
-
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { Link } from 'react-router-dom';
+import Button from '../components/Button';
 const Profile = () => {
   const user = {
     username: 'example_user',
@@ -33,6 +35,8 @@ const Profile = () => {
         <p>Matches Won: {user.matchesWon}</p>
         <p>Matches Lost: {user.matchesLost}</p>
       </div>
+      {/* <Link to='/home'><Button text="Back" imgComponent={<IoArrowBackCircleSharp size={25}/>} /></Link> */}
+
     </div>
   );
 };
